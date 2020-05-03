@@ -35,4 +35,20 @@ describe('Component TripSummary', () => {
   it('should throw error without required props (id, image, name, cost, days)', () => {
     expect(() => shallow(<TripSummary />)).toThrow();
   });
+
+  it('should render tags in spans an in correct order', () => {
+    const component = shallow(<TripSummary id='abc' image='image.jpg' name='name' days={1} tags={['tag1', 'tag2', 'tag3']} cost='cost' />);
+
+    expect(component.find('.tag').at(0).text()).toEqual('tag1');
+    expect(component.find('.tag').at(0).type()).toEqual('span');
+    expect(component.find('.tag').at(1).text()).toEqual('tag2');
+    expect(component.find('.tag').at(1).type()).toEqual('span');
+    expect(component.find('.tag').at(2).text()).toEqual('tag3');
+    expect(component.find('.tag').at(2).type()).toEqual('span');
+  });
+
+  it('should not render div with class tags if prop tags is an empty [] or without this prop', () => {
+    const component = shallow(<TripSummary id='abc' image='image.jpg' name='alt' days={1} tags={[]} cost='cost'/>);
+    expect(component.find('.tags')).toHaveLength(0);
+  });
 });
