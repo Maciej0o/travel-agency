@@ -1,0 +1,32 @@
+{
+  "orders": [
+    {
+      "car-rental": "suv",
+      "accommodation": "suite",
+      "features": [
+        "pool"
+      ],
+      "adults": 1,
+      "children": 0,
+      "name": "",
+      "contact": "dfdf",
+      "start-date": "",
+      "totalCost": "$53,081",
+      "id": 1
+    },
+    {
+      "car-rental": "suv",
+      "accommodation": "suite",
+      "features": [
+        "pool"
+      ],
+      "adults": 1,
+      "children": 0,
+      "name": "cvcv",
+      "contact": "dfdf",
+      "start-date": "",
+      "totalCost": "$53,081",
+      "id": 2
+    }
+  ]
+}
