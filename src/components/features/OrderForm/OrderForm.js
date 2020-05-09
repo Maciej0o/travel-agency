@@ -11,12 +11,15 @@ import Button from '../../common/Button/Button';
 
 
 
-const sendOrder = (options, tripCost) => {
+
+const sendOrder = (options, tripCost, tripId, tripName) => {
   const totalCost = formatPrice(calculateTotal(tripCost, options));
 
   const payload = {
     ...options,
     totalCost,
+    tripId,
+    tripName,
   };
 
   const url = settings.db.url + '/' + settings.db.endpoint.orders;
@@ -36,10 +39,22 @@ const sendOrder = (options, tripCost) => {
     }).then(function(parsedResponse){
       console.log('parsedResponse', parsedResponse);
     });
+
+  const { name, contact } = options;
+
+  if (name == '') {
+    window.alert('Fill your name');
+  }
+  else if (contact == '') {
+    window.alert('Fill your contact');
+  }
+
 };
 
 
-const OrderForm = ({tripCost, options, setOrderOption}) => (
+
+
+const OrderForm = ({tripCost, options, setOrderOption, tripId, tripName}) => (
   <Row>
     {pircing.map(option => (
       <Col key={option.id} md={4}>
@@ -49,7 +64,7 @@ const OrderForm = ({tripCost, options, setOrderOption}) => (
     <Col xs={12}>
       <OrderSummary tripCost={tripCost} options={options} />
     </Col>
-    <Button onClick={() => sendOrder(options, tripCost)}>Order now!</Button>
+    <Button onClick={() => sendOrder(options, tripCost, tripId, tripName)}>Order now!</Button>
   </Row>
 );
 
@@ -57,6 +72,8 @@ OrderForm.propTypes = {
   tripCost: PropTypes.string,
   options: PropTypes.object,
   setOrderOption: PropTypes.func,
+  tripId: PropTypes.string,
+  tripName: PropTypes.string,
 };
 
 export default OrderForm;
