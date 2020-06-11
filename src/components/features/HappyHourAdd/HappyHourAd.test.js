@@ -96,3 +96,8 @@ describe('Component HappyHourAd with mocked Date and promoDescription', () => {
   checkDescriptionAtTime('12:00:00', mockProps.promoDescription);
   checkDescriptionAtTime('12:59:59', mockProps.promoDescription);
 });
+
+describe('Component HappyHourAd with mocked Date and promoDecription and delay', () => {
+  checkDescriptionAfterTime('11:57:58', 240, mockProps.promoDescription);
+  checkDescriptionAfterTime('11:59:58', 3, mockProps.promoDescription);
+});
