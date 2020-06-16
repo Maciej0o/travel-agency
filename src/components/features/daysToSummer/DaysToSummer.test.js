@@ -1,0 +1,69 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import DaysToSummer from './DaysToSummer';
+
+
+const mockProps = {
+  title: '.component',
+};
+
+
+describe('Component HappyHourAd', () => {
+  it('should render without crashing', () => {
+    const component = shallow(<DaysToSummer />);
+    expect(component).toBeTruthy();
+  });
+
+  it('should render heading ', () => {
+    const component = shallow(<DaysToSummer />);
+    expect(component.exists(mockProps.title)).toEqual(true);
+  });
+
+});
+
+const trueDate = Date;
+const mockDate = customDate => class extends Date {
+  constructor(...args) {
+    if (args.length) {
+      super(...args);
+    } else {
+      super(customDate);
+    }
+    return this;
+  }
+  static now() {
+    return (new Date(customDate)).getTime();
+  }
+};
+
+const checkSummerDate = (date, expectDate) => {
+  it(`should show correct at ${date}`, () => {
+    global.Date = mockDate(`${date}T00:00:00.000Z`);
+
+    const component = shallow(<DaysToSummer {...mockProps} />);
+    const days = component.find('.component').text();
+    expect(days).toEqual(expectDate);
+
+    global.Date = trueDate;
+  });
+};
+
+describe('Component DaysToSummer with mocked date', () => {
+
+  //before summer
+  checkSummerDate('2019-05-25', '27 days to summer');
+  checkSummerDate('2019-01-11', '161 days to summer');
+  checkSummerDate('2019-06-20', '1 days to summer');
+
+  // during summer
+
+  checkSummerDate('2019-07-22', 'It is summer time, take a break from work and see world :)');
+  checkSummerDate('2019-06-21', 'It is summer time, take a break from work and see world :)');
+  checkSummerDate('2019-09-23', 'It is summer time, take a break from work and see world :)');
+
+  //after summer
+  checkSummerDate('2019-09-24', '271 days to summer');
+  checkSummerDate('2019-10-21', '244 days to summer');
+  checkSummerDate('2019-12-20', '184 days to summer');
+
+});
